@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    {% if character_list %}
+        <div class="page-title" align="center">
+            <h3>Каноны ролевой</h3>
+        </div>
+        {% for c in character_list %}
+            {% if c.is_canon %}
+                <div class="profile">
+                    <div class="about-user" align="center">
+                        <div class="author">{{ c.name }} {{ c.last_name }}</div>
+                        <p></p>
+                        {% if c.player %}
+                            <div class="status">игрок: {{ c.player.username }}</div>
+                        {% else %}
+                            <div class="status"><a href="#" class="nav-link dropdown-toggle" href="#"
+                                                   data-toggle="modal" data-target="#pick" onclick="return false"
+                                                   role="button">занять</a>
+                            </div>
+                        {% endif %}
+                        <p></p>
+                        <p><img src="{{ s.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
+                    </div>
+                    <div class="posts-user">
+                        <div class="posts-counter">Написано постов: 249</div>
+                        <p></p>
+                        <p><a href="#">Последний пост</a></p>
+                        <p><a href="#" data-toggle="modal" data-target="#description" onclick="return false"
+                              role="button">Описание
+                            персонажа</a></p>
+                    </div>
+                </div>
+                <div class="modal fade" id="description" tabindex="-1" role="dialog"
+                     aria-labelledby="description"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Описание персонажа</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ c.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <p></p>
+        <div class="page-title" align="center">
+            <h3>Неканоны ролевой</h3>
+        </div>
+        {% for c in character_list %}
+            {% if c.is_canon == False %}
+                <div class="profile">
+                    <div class="about-user" align="center">
+                        <p>
+                        <div class="author">Анна Каренина</div>
+                        </p>
+                        <p>
+                        <div class="status">игрок: Алино4ка Валинуркина</div>
+                        </p>
+                        <p><img src="аня.png" width="180" height="180" class="avatar" align="center"></p>
+                    </div>
+                    <div class="posts-user">
+                        <p>
+                        <div class="posts-counter">Написано постов: 249</div>
+                        </p>
+                        <p><a href="#">Последний пост</a></p>
+                        <p><a href="#" data-toggle="modal" data-target="#description" onclick="return false"
+                              role="button">Описание
+                            персонажа</a></p>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="description" tabindex="-1" role="dialog" aria-labelledby="description"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Описание персонажа</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ c.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        Пока не создано ни одного персонажа.
+    {% endif %}
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="pick" tabindex="-1" role="dialog" aria-labelledby="pick" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Подтверждение действия</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Вы хотите занять этого персонажа?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                    <button type="button" class="btn btn-primary">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+
+{% endblock %}

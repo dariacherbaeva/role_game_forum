@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="{% static 'jquery/jquery-3.4.1.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}"/>
+    <title>Школа волшебства Уагаду</title>
+    <link rel="shortcut icon" href="{% static 'images/icon.png' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jquery/docs.min.js' %}"></script>
+</head>
+<style>
+    .header {
+        background-image: url({% static 'images/banner2.jpg'%});
+        box-shadow: 0 0 10px rgb(74, 48, 54);
+        text-shadow: black 0 0 4px;
+        height: 220pt;
+    }
+</style>
+<body>
+<header>
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown1").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function myFunction2() {
+            document.getElementById("myDropdown2").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function myFunction3() {
+            document.getElementById("myDropdown3").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+
+    </script>
+    <div class="header">
+        <h1 align="right" class="header-text1">
+            Школа волшебства
+        </h1>
+        <h1 align="right" class="header-text2">
+            <a href="{% url 'main_page' %}"> Уагаду</a>
+        </h1>
+    </div>
+
+    <div>
+        <ul id="main-menu" class="nav nav-tabs" align="center">
+            <li class="nav-item dropdown">
+                {% if user.is_authenticated %}
+                    <a class="nav-link dropdown-toggle" href="#" onclick="myFunction(); return false"
+                       role="button">Профиль</a>
+                    <div class="dropdown-menu" id="myDropdown1">
+                        <a class="dropdown-item" href="{% url 'profile' pk=request.user.id %}">Мой профиль</a>
+                        <a class="dropdown-item" href="#">Мои друзья</a>
+                        <a class="dropdown-item" href="#">Мои сообщения</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+                    </div>
+                {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" onclick="myFunction(); return false"
+                       role="button">Вход</a>
+                    <div class="dropdown-menu" id="myDropdown1">
+                        <a class="dropdown-item" href="#">Войти</a>
+                        <a class="dropdown-item" href="#">Регистрация</a>
+                    </div>
+                {% endif %}
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" onclick="myFunction2(); return false"
+                   role="button">Персонажи</a>
+                <div class="dropdown-menu" id="myDropdown2">
+                    <a class="dropdown-item" href="{% url 'Characters:characters' %}">Список персонажей</a>
+                    <a class="dropdown-item" href="#">Создание персонажа</a>
+                    <a class="dropdown-item" href="#">Мои персонажи</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" onclick="myFunction3(); return false"
+                   role="button">Игра</a>
+                <div class="dropdown-menu" id="myDropdown3">
+                    <a class="dropdown-item" href="{% url 'plot' %}">Сюжет</a>
+                    <a class="dropdown-item" href="{% url 'navigation' %}">Навигация</a>
+                    <a class="dropdown-item" href="{% url 'school' %}">О школе</a>
+                    <a class="dropdown-item" href="{% url 'rules'%}">Правила</a>
+                    <a class="dropdown-item" href="#">Обсуждения</a>
+                </div>
+            </li>
+            <li>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                           id="search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+
+<div>
+    <p></p>
+</div>
+<footer class="page-footer font-small pt-4">
+    <div class="footer-copyright text-center py-3">© 2020 Copyright: Cherbaeva Daria</a>
+    </div>
+</footer>
+
+</body>
+</html>

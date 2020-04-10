@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="page-title" align="center">
+        {% if siteuser.id == request.user.id %}
+            <h3>Мой профиль</h3>
+        {% else %}
+            <h3>Профиль {{ siteuser.username }}</h3>
+        {% endif %}
+    </div>
+
+    <div class="profile">
+        <div class="about-user" alin="center">
+            <p>
+            <div class="author">{{ siteuser.username }}</div>
+            </p>
+            {% if siteuser.status %}
+                <p>
+                <div class="status">{{ siteuser.status }}</div></p>
+            {% else %}
+                <p>
+                <div class="status">Нет статуса</div></p>
+            {% endif %}
+            {% if siteuser.photo %}
+                <p><img src="{{ siteuser.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
+            {% else %}
+                <p><img src="{% static 'images/you.jpg' %}" width="180" height="180" class="avatar" align="center"></p>
+            {% endif %}
+        </div>
+        <div class="posts-user">
+            <p>
+            <div class="posts-counter">Написано постов: 249</div>
+            </p>
+            <p><a href="#">Последний пост</a></p>
+            {% if siteuser.id == request.user.id %}
+                <p><a href="{% url 'profile_edit' pk=siteuser.id %}">Редактировать профиль</a></p>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

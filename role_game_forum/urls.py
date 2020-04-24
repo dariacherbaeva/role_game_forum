@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from role_game_forum import settings
 
@@ -24,7 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
     url('', include('foundation.urls')),
-    url(r'^characters/', include(('characters.urls', 'characters'), namespace='Characters')),
+    re_path(r'^characters/', include(('characters.urls', 'characters'), namespace='Characters')),
+    re_path(r'^forum/', include(('forum.urls', 'forum'), namespace='Forum')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+    <div class="page-title" align="center">
+        <h3>Создание персонажа</h3>
+    </div>
+    <form class="menu" method="post" action="{% url 'Characters:new' %}" enctype="multipart/form-data">
+    <div class="form-group">
+        {% csrf_token %}
+        {{ form|as_bootstrap }}
+    </div>
+    <div class="form-group">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Создать" align="center"/>
+    </div>
+    </form>
+{% endblock %}

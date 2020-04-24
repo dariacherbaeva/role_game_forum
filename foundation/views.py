@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.views.generic import TemplateView, DetailView, FormView, UpdateView, ListView
+from django.views.generic import TemplateView, DetailView, UpdateView
 
-from characters.models import Subject, Faculty
 from foundation.forms import SiteRegistrationForm
 from foundation.models import SiteUser
 
@@ -48,16 +47,6 @@ class PlotView(TemplateView):
 
 class NavigationView(TemplateView):
     template_name = 'foundation/navigation.html'
-
-
-class SubjectsListView(ListView):
-    template_name = 'foundation/about_school.html'
-    model = Subject
-    context_object_name = 'subjects'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(SubjectsListView, self).get_context_data(**kwargs)
-        context['faculties'] = Faculty.objects.all()
 
 
 class RulesView(TemplateView):

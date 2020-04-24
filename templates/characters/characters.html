@@ -17,23 +17,35 @@
                             <div class="status">игрок: {{ c.player.username }}</div>
                         {% else %}
                             <div class="status"><a href="#" class="nav-link dropdown-toggle" href="#"
-                                                   data-toggle="modal" data-target="#pick" onclick="return false"
+                                                   data-toggle="modal"
+                                                   data-target="#{{ c.name }}{{ c.last_name }}{{ c.age }}"
+                                                   onclick="return false"
                                                    role="button">занять</a>
                             </div>
                         {% endif %}
                         <p></p>
-                        <p><img src="{{ s.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
+                        <p><img src="{{ c.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
                     </div>
                     <div class="posts-user">
-                        <div class="posts-counter">Написано постов: 249</div>
+                        <div class="posts-counter"><b>факультет: </b>{{ c.faculty.name }}</div>
+                        {% if c.blood_status == 'p' %}
+                            <div class="posts-counter"><b>статус крови:</b> чистокровный(ая)</div>
+                        {% elif c.blood_status == 'h' %}
+                            <div class="posts-counter"><b>статус крови:</b> полукровка</div>
+                        {% elif c.blood_status == 'm' %}
+                            <div class="posts-counter"><b>статус крови:</b> магглорождённый(ая)</div>
+                        {% endif %}
+                        <div class="posts-counter"><b>возраст:</b> {{ c.age }}</div>
+                        <div class="posts-counter"><b>курс:</b> {{ c.year }}</div>
                         <p></p>
-                        <p><a href="#">Последний пост</a></p>
-                        <p><a href="#" data-toggle="modal" data-target="#description" onclick="return false"
-                              role="button">Описание
-                            персонажа</a></p>
+                        <div class="posts-counter"><b> <a href="#" data-toggle="modal"
+                                                          data-target="#{{ c.name }}{{ c.last_name }}"
+                                                          onclick="return false"
+                                                          role="button">Описание
+                            персонажа</a></b></div>
                     </div>
                 </div>
-                <div class="modal fade" id="description" tabindex="-1" role="dialog"
+                <div class="modal fade" id="{{ c.name }}{{ c.last_name }}" tabindex="-1" role="dialog"
                      aria-labelledby="description"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -50,9 +62,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="{{ c.name }}{{ c.last_name }}{{ c.age }}" tabindex="-1" role="dialog"
+                     aria-labelledby="pick" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Подтверждение действия</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Вы хотите занять этого персонажа?
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{% url 'Characters:take' character_id=c.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                                    <button type="submit" class="btn btn-primary">Да</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
         {% endfor %}
         <p></p>
+        <div><p></p></div>
+
+
         <div class="page-title" align="center">
             <h3>Неканоны ролевой</h3>
         </div>
@@ -61,25 +99,40 @@
                 <div class="profile">
                     <div class="about-user" align="center">
                         <p>
-                        <div class="author">Анна Каренина</div>
+                        <div class="author">{{ c.name }} {{ c.last_name }}</div>
                         </p>
                         <p>
-                        <div class="status">игрок: Алино4ка Валинуркина</div>
+                        <div class="status">игрок: {{ c.player.username }}</div>
                         </p>
-                        <p><img src="аня.png" width="180" height="180" class="avatar" align="center"></p>
+                        <p><img src="{{ c.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
                     </div>
-                    <div class="posts-user">
-                        <p>
-                        <div class="posts-counter">Написано постов: 249</div>
-                        </p>
-                        <p><a href="#">Последний пост</a></p>
-                        <p><a href="#" data-toggle="modal" data-target="#description" onclick="return false"
-                              role="button">Описание
-                            персонажа</a></p>
+                                        <div class="posts-user">
+                        {% if c.faculty %}
+                            <div class="posts-counter"><b>факультет: </b>{{ c.faculty.name }}</div>
+                        {% else %}
+                            <div class="posts-counter"><b>преподаватель</b></div>
+                        {% endif %}
+                        {% if c.blood_status == 'p' %}
+                            <div class="posts-counter"><b>статус крови:</b> чистая кровь</div>
+                        {% elif c.blood_status == 'h' %}
+                            <div class="posts-counter"><b>статус крови:</b> полукровка</div>
+                        {% elif c.blood_status == 'm' %}
+                            <div class="posts-counter"><b>статус крови:</b> магглорождённый(ая)</div>
+                        {% endif %}
+                        <div class="posts-counter"><b>возраст:</b> {{ c.age }}</div>
+                        {% if c.year != 0 %}
+                            <div class="posts-counter"><b>курс:</b> {{ c.year }}</div>
+                        {% endif %}
+                        <p></p>
+                        <div class="posts-counter"><b> <a href="#" data-toggle="modal"
+                                                          data-target="#{{ c.name }}{{ c.last_name }}"
+                                                          onclick="return false"
+                                                          role="button">Описание
+                            персонажа</a></b></div>
                     </div>
                 </div>
 
-                <div class="modal fade" id="description" tabindex="-1" role="dialog" aria-labelledby="description"
+                <div class="modal fade" id="{{ c.name }}{{ c.last_name }}" tabindex="-1" role="dialog" aria-labelledby="description"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
@@ -124,7 +177,7 @@
     </div>
 
 
-    </div>
+
 
 
 {% endblock %}

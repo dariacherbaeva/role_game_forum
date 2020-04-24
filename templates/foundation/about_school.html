@@ -36,6 +36,12 @@
     <div class="main-page-text">
         {% if subjects %}
             {% for s in subjects %}
+                <div class="main-page-text">Название: {{ s.name }}</div>
+                {% if s.teacher %}
+                    <div class="main-page-text">Учитель: {{ s.teacher.name }}</div>
+                {% else %}
+                    <div class="main-page-text">Учитель: нет.</div>
+                {% endif %}
             {% endfor %}
         {% else %}
             Ни одного предмета не создано.
@@ -49,6 +55,9 @@
     <div class="main-page-text">
         {% if faculties %}
             {% for f in faculties %}
+                <div class="main-page-text"><b>{{ f.name }}</b></div>
+                <img class="avatar" width="200" height="180" align="center" src="{{ f.animal.url }}"/>
+                <div class="main-page-text">{{ f.description }}</div>
             {% endfor %}
         {% else %}
             Ни одного факультета не создано.

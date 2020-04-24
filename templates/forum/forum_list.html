@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="page-title" align="center">
+        <h3>Обсуждения</h3>
+    </div>
+
+    <div class="location-topic" align="center"><b>Организационные темы:</b></div>
+    {% if themes %}
+        {% for t in themes %}
+            <div class="location-list">
+                <div class="location-link">
+                    <a href="#">{{ t.name }}</a>
+                    <p>Создано: {{ t.first_post.when }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="main-page-text">Пока не создано ни одной темы.</div>
+    {% endif %}
+
+    <div class="location-topic" align="center"><b>Локации:</b></div>
+    {% if game_themes %}
+        {% for s in sections %}
+            <div class="location-topic" align="center">{{ s.name }}</div>
+            {% for t in game_themes %}
+                {% if t.section == s %}
+                    <div class="location-list">
+                        <div class="location-link">
+                            <a href="#">{{ t.name }}</a>
+                            <p>{{ t.first_post.when }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="main-page-text">Пока не создано ни одной темы.</div>
+    {% endif %}
+
+
+{% endblock %}

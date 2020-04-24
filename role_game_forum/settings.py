@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'foundation',
     'friends',
     'django_forms_bootstrap',
-    'django_registration',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

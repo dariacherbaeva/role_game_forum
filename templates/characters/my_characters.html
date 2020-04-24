@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="page-title" align="center">
+        <h3>Мои персонажи</h3>
+    </div>
+    {% if character_list %}
+        {% for c in character_list %}
+            {% if c.player.id == request.user.id %}
+                <div class="profile">
+                    <div class="about-user" align="center">
+                        <div class="author">{{ c.name }} {{ c.last_name }}</div>
+                        <p></p>
+                        <div class="status">игрок: {{ c.player.username }}</div>
+                        <p></p>
+                        <p><img src="{{ c.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
+                    </div>
+                    <div class="posts-user">
+                        {% if c.faculty %}
+                            <div class="posts-counter"><b>факультет: </b>{{ c.faculty.name }}</div>
+                        {% else %}
+                            <div class="posts-counter"><b>преподаватель</b></div>
+                        {% endif %}
+                        {% if c.blood_status == 'p' %}
+                            <div class="posts-counter"><b>статус крови:</b> чистая кровь</div>
+                        {% elif c.blood_status == 'h' %}
+                            <div class="posts-counter"><b>статус крови:</b> полукровка</div>
+                        {% elif c.blood_status == 'm' %}
+                            <div class="posts-counter"><b>статус крови:</b> магглорождённый(ая)</div>
+                        {% endif %}
+                        <div class="posts-counter"><b>возраст:</b> {{ c.age }}</div>
+                        {% if c.year != 0 %}
+                            <div class="posts-counter"><b>курс:</b> {{ c.year }}</div>
+                        {% endif %}
+                        <p></p>
+                        <div class="posts-counter"><b> <a href="#" data-toggle="modal"
+                                                          data-target="#{{ c.name }}{{ c.last_name }}"
+                                                          onclick="return false"
+                                                          role="button">Описание
+                            персонажа</a></b></div>
+                    </div>
+                </div>
+                <div class="modal fade" id="{{ c.name }}{{ c.last_name }}" tabindex="-1" role="dialog"
+                     aria-labelledby="description"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Описание персонажа</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ c.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        Персонажей пока нет.
+    {% endif %}
+{% endblock %}

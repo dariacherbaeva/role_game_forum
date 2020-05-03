@@ -16,7 +16,7 @@ class Section(models.Model):
 class Theme(models.Model):
     name = models.CharField(max_length=50)
     section = models.ForeignKey(Section, on_delete=models.CASCADE, blank=True, null=True)
-    first_post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    first_post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='first_post')
     is_open = models.BooleanField()
     is_game = models.BooleanField()
 
@@ -30,6 +30,10 @@ class Post(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True)
     picture = models.ImageField(upload_to='photos', blank=True, null=True)
     when = models.DateTimeField()
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='theme', blank=True, null=True)
+
+    def __str__(self):
+        return self.text
 
 
 class Like(models.Model):

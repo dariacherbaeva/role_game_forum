@@ -97,7 +97,7 @@
                        role="button">Профиль</a>
                     <div class="dropdown-menu" id="myDropdown1">
                         <a class="dropdown-item" href="{% url 'profile' pk=request.user.id %}">Мой профиль</a>
-                        <a class="dropdown-item" href="#">Мои друзья</a>
+                        <a class="dropdown-item" href="{% url 'Friends:friends_list' %}">Мои друзья</a>
                         <a class="dropdown-item" href="#">Мои сообщения</a>
                         <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
                     </div>

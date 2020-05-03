@@ -26,6 +26,7 @@ urlpatterns = [
     url('', include('foundation.urls')),
     re_path(r'^characters/', include(('characters.urls', 'characters'), namespace='Characters')),
     re_path(r'^forum/', include(('forum.urls', 'forum'), namespace='Forum')),
+    re_path(r'^friends/', include(('friends.urls', 'friends'), namespace='Friends')),
 
 ]
 if settings.DEBUG:

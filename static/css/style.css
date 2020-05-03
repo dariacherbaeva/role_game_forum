@@ -90,26 +90,28 @@ a:hover {
 }
 
 .post-box {
-    margin-left: 300px;
-    overflow: hidden;
-    height: auto;
-    text-align: justify;
-    margin: 20pt;
-    float: left;
-    margin-right: 40pt;
+        margin-left: 300px;
+        overflow: hidden;
+        height: auto;
+        text-align: justify;
+        margin: 20pt;
+        float: left;
+        margin-right: 40pt;
+        width: 1470px;
 }
 
 .post-body {
-    overflow: hidden;
-    height: auto;
-    padding-left: 30pt;
-    padding-right: 30pt;
-    margin-top: 10pt;
-    color: rgb(59, 55, 55);
-    padding-top: 5pt;
-    padding-bottom: 6pt;
-    border: 2px double rgb(29, 26, 26);
-    background: rgba(59, 55, 55, 0.137);
+        overflow: hidden;
+        height: auto;
+        min-height: 380px;
+        padding-left: 30pt;
+        padding-right: 30pt;
+        margin-top: 10pt;
+        color: rgb(59, 55, 55);
+        padding-top: 5pt;
+        padding-bottom: 6pt;
+        border: 2px double rgb(29, 26, 26);
+        background: rgba(59, 55, 55, 0.137);
 }
 
 .avatar {

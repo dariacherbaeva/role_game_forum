@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.views.generic import TemplateView, DetailView, UpdateView
 
+from forum.models import Post
 from foundation.forms import SiteRegistrationForm
 from foundation.models import SiteUser
+from friends.models import Subscription
 
 
 def registration_view(request):
@@ -32,6 +35,16 @@ class MainPageView(TemplateView):
 class ProfileView(DetailView):
     model = SiteUser
     template_name = 'foundation/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts_counter'] = Post.objects.filter(author_id=self.object.id).count()
+        if self.object != self.request.user:
+            if Subscription.objects.filter(subscriber_id=self.request.user.id, subscriptor_id=self.object.id).exists():
+                context['is_sub'] = True
+            else:
+                context['is_sub'] = False
+        return context
 
 
 class ProfileEditView(UpdateView):

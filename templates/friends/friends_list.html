@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div align="center">
+        <div class="page-title" align="center">
+            <h3>Друзья</h3>
+        </div>
+        {% for friend in friends %}
+            <form method="post"
+                  action="{% url 'Friends:unsubscribe' pk=friend.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Удалить из друзей"/>
+            </form>
+        {% endfor %}
+        <div class="page-title" align="center">
+            <h3>Подписки</h3>
+        </div>
+        {% for subscription in subscriptions %}
+            <div class="main-page-text"> {{ subscription.username }}</div>
+            <form method="post"
+                  action="{% url 'Friends:unsubscribe' pk=subscription.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Отписаться"/>
+            </form>
+        {% endfor %}
+        <div class="page-title" align="center">
+            <h3>Подписчики</h3>
+        </div>
+        {% for subscriber in subscribers %}
+            <div class="main-page-text"> {{ subscriber.username }}</div>
+            <form method="post"
+                  action="{% url 'Friends:subscribe' pk=subscriber.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Добавить в друзья"/>
+            </form>
+        {% endfor %}
+    </div>
+{% endblock %}

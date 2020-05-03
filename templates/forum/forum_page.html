@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+
+{% block content %}
+    <div class="page-title" align="center">
+        <h3>{{ theme.name }}</h3>
+    </div>
+
+    <div class="post-box">
+        <div class="post-time">
+            {{ theme.first_post.when }}
+        </div>
+        <div class="post-author">
+            <ul>
+                <p>
+                <div class="author"><a
+                        href="{% url 'profile' pk=theme.first_post.author.pk %}">{{ theme.first_post.author.username }}</a>
+                </div>
+                </p>
+                <p>
+                <div class="status">{{ theme.first_post.author.status }}</div>
+                </p>
+                {% if theme.first_post.author.photo %}
+                    <p><img src="{{ theme.first_post.author.photo.url }}" width="180" height="180" class="avatar"
+                            align="center"></p>
+                {% endif %}
+                <!--<p><div class="posts-counter">Сообщений: 249</div></p>-->
+            </ul>
+        </div>
+        <div class="post-body">
+            <div id="p193244-content" class="post-content">
+                {{ theme.first_post.text }}
+                {% if theme.first_post.picture %}
+                    <img src="{{ theme.first_post.picture.url }}" class="avatar">
+                {% endif %}
+                <p><a href="#" class="reply-a">Ответить</a></p>
+            </div>
+        </div>
+    </div>
+
+    {% for post in posts %}
+        <div class="post-box">
+            <div class="post-time">
+                {{ post.when }}
+            </div>
+            <div class="post-author">
+                <ul>
+                    <p>
+                    <div class="author"><a
+                            href="{% url 'profile' pk=post.author.pk %}">{{ post.author.username }}</a>
+                    </div>
+                    </p>
+                    <p>
+                    <div class="status">{{ post.author.status }}</div>
+                    </p>
+                    {% if post.author.photo %}
+                        <p><img src="{{ post.author.photo.url }}" width="180" height="180" class="avatar"
+                                align="center"></p>
+                    {% endif %}
+                    <!--<p><div class="posts-counter">Сообщений: 249</div></p>-->
+                </ul>
+            </div>
+            <div class="post-body">
+                <div id="p193244-content" class="post-content">
+                    {{ post.text }}
+                    <p align="center">*************************</p>
+                    {% if post.picture %}
+                        <div>
+                            <img src="{{ post.picture.url }}" class="avatar">
+                        </div>
+                    {% endif %}
+                    <p><a href="#" class="reply-a">Ответить</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% if request.user.is_authenticated == False %}
+        <div class="main-page-text">Чтобы написать пост в этой теме, <a href="{% url 'login' %}">войдите</a>.</div>
+    {% elif theme.is_open == False %}
+        <div class="main-page-text">Данная тема закрыта.</div>
+    {% elif theme.is_game %}
+        <form class="form-control" action="{% url '' %}">
+            <div class="new-post" align="center">
+                <h5 сlass="np-title">Новый пост</h5>
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ game_form|as_bootstrap }}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" align="center">Отправить</button>
+                </div>
+            </div>
+        </form>
+    {% elif theme.is_game == False %}
+        код для системной
+    {% endif %}
+{% endblock %}

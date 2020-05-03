@@ -122,6 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
 AUTH_USER_MODEL = 'foundation.SiteUser'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")

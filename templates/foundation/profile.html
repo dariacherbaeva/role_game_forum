@@ -27,12 +27,37 @@
             {% else %}
                 <p><img src="{% static 'images/you.jpg' %}" width="180" height="180" class="avatar" align="center"></p>
             {% endif %}
+            {% if siteuser != request.user %}
+                {% if is_sub %}
+                    <form method="post"
+                          action="{% url 'Friends:unsubscribe' pk=siteuser.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Отписаться"/>
+                    </form>
+                {% else %}
+                    <form method="post"
+                          action="{% url 'Friends:subscribe' pk=siteuser.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Подписаться"/>
+                    </form>
+                {% endif %}
+            {% endif %}
         </div>
         <div class="posts-user">
             <p>
-            <div class="posts-counter">Написано постов: 249</div>
+            <div class="posts-counter">Написано постов: {{ posts_counter }}</div>
             </p>
-            <p><a href="#">Последний пост</a></p>
+            {% if siteuser.email %}
+                <p>
+                <div class="posts-counter">Электронная почта: {{ siteuser.email }}</div>
+                </p>
+            {% else %}
+                <p>
+                <div class="posts-counter">Электронная почта: не указана</div>
+                </p>
+            {% endif %}
             {% if siteuser.id == request.user.id %}
                 <p><a href="{% url 'profile_edit' pk=siteuser.id %}">Редактировать профиль</a></p>
             {% endif %}

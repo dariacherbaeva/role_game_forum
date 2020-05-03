@@ -10,7 +10,7 @@
         {% for t in themes %}
             <div class="location-list">
                 <div class="location-link">
-                    <a href="#">{{ t.name }}</a>
+                    <a href="{% url 'Forum:page' pk=t.pk %}">{{ t.name }}</a>
                     <p>Создано: {{ t.first_post.when }}</p>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 {% if t.section == s %}
                     <div class="location-list">
                         <div class="location-link">
-                            <a href="#">{{ t.name }}</a>
+                            <a href="{% url 'Forum:page' pk=t.pk %}">{{ t.name }}</a>
                             <p>{{ t.first_post.when }}</p>
                         </div>
                     </div>

@@ -1,8 +1,10 @@
-from django.utils import timezone
-from django.views.generic import TemplateView, DetailView, CreateView
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.views.generic import TemplateView, DetailView
+from rest_framework.response import Response
 
-from forum.forms import GamePostForm, SystemPostForm
-from forum.models import Theme, Section, Post
+from forum.models import Theme, Section, Post, SectionSerializer, Like
+from rest_framework.views import APIView
 
 
 class ForumListView(TemplateView):
@@ -27,3 +29,19 @@ class ForumPageView(DetailView):
         # context['game_form'] = GamePostForm
         # context['system_form'] = SystemPostForm
         return context
+
+
+class AllSectionView(APIView):
+    def get(self, request):
+        sections = SectionSerializer(Section.objects.all(), many=True)
+        return Response({'sections': sections.data})
+
+
+@login_required
+def like(request, pk):
+    if Like.objects.filter(post_id=pk, user=request.user).exists():
+        Like.objects.delete(post_id=pk, user=request.user)
+    else:
+        Like.objects.create(post_id=pk, user=request.user)
+    next_page = request.POST.get('next', '/')
+    return HttpResponseRedirect(next_page)

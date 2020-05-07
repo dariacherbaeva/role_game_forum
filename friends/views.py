@@ -32,12 +32,12 @@ class FriendsListView(TemplateView):
 @login_required
 def subscribe(request, pk):
     Subscription.objects.create(subscriber=request.user, subscriptor_id=pk)
-    next = request.POST.get('next', '/')
-    return HttpResponseRedirect(next)
+    next_page = request.POST.get('next', '/')
+    return HttpResponseRedirect(next_page)
 
 
 @login_required
 def unsubscribe(request, pk):
     Subscription.objects.get(subscriber=request.user, subscriptor_id=pk).delete()
-    next = request.POST.get('next', '/')
-    return HttpResponseRedirect(next)
+    next_page = request.POST.get('next', '/')
+    return HttpResponseRedirect(next_page)

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div align="center">
+        <div class="page-title" align="center">
+            <h3>Мои сообщения</h3>
+        </div>
+        <p></p>
+        <div>
+            <a href="{% url 'Chat:new' %}" type="button" class="btn btn-outline-success my-2 my-sm-0">
+                Новое сообщение
+            </a>
+        </div>
+
+        <div class="page-title" align="center">
+            <h3>Полученные сообщения</h3>
+        </div>
+
+        {% for m in message_list %}
+            {% if m.to_who == request.user %}
+                <div class="location-list">
+                    <div class="location-link">
+                        <p>От кого: {{ m.from_who }}</p>
+                        <p>Текст: {{ m.text }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="page-title" align="center">
+            <h3>Отправленные сообщения</h3>
+        </div>
+
+        {% for m in message_list %}
+            {% if m.from_who == request.user %}
+                <div class="location-list">
+                    <div class="location-link">
+                        <p>Кому: {{ m.to_who }}</p>
+                        <p>Текст: {{ m.text }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+

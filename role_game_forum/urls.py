@@ -27,6 +27,7 @@ urlpatterns = [
     re_path(r'^characters/', include(('characters.urls', 'characters'), namespace='Characters')),
     re_path(r'^forum/', include(('forum.urls', 'forum'), namespace='Forum')),
     re_path(r'^friends/', include(('friends.urls', 'friends'), namespace='Friends')),
+    re_path(r'^chat/', include(('chat.urls', 'chat'), namespace='Chat')),
 
 ]
 if settings.DEBUG:

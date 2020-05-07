@@ -6,6 +6,7 @@
             <h3>Друзья</h3>
         </div>
         {% for friend in friends %}
+            <div class="main-page-text"> {{ friend.username }}</div>
             <form method="post"
                   action="{% url 'Friends:unsubscribe' pk=friend.id %}">
                 {% csrf_token %}

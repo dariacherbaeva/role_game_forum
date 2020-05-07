@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="page-title" align="center">
+        <h3>Результаты поиска</h3>
+    </div>
+    {% if object_list %}
+        {% for u in object_list %}
+            <div class="main-page-text">
+                <p>логин: {{ u.username }}</p>
+                <p>email: {{ u.email }}</p>
+                <a href="{% url 'profile' pk=u.id %}">профиль</a>
+                <p>___</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

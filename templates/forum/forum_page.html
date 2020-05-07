@@ -64,7 +64,7 @@
             <div class="post-body">
                 <div id="p193244-content" class="post-content">
                     {{ post.text }}
-                    <p align="center">*************************</p>
+                    <p>___________________________________________________________________</p>
                     {% if post.picture %}
                         <div>
                             <img src="{{ post.picture.url }}" class="avatar">
@@ -93,6 +93,11 @@
             </div>
         </form>
     {% elif theme.is_game == False %}
-        код для системной
+        <form method="get" action="{% url 'Forum:new_system' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="hidden" name="theme" value="{{ theme }}"/>
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Новый пост"/>
+        </form>
     {% endif %}
 {% endblock %}

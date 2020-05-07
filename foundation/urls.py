@@ -1,6 +1,6 @@
 from django.urls import path
 from foundation.views import MainPageView as Main, registration_view as registration, ProfileView, ProfileEditView, \
-    PlotView, NavigationView, RulesView
+    PlotView, NavigationView, RulesView, SearchResultView
 
 urlpatterns = [
     path('register/', registration, name='registration'),
@@ -9,5 +9,6 @@ urlpatterns = [
     path('profile/<int:pk>/edit', ProfileEditView.as_view(), name='profile_edit'),
     path('plot/', PlotView.as_view(), name='plot'),
     path('navigation/', NavigationView.as_view(), name='navigation'),
-    path('rules/', RulesView.as_view(), name='rules')
+    path('rules/', RulesView.as_view(), name='rules'),
+    path('search/', SearchResultView.as_view(), name='search'),
 ]

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from foundation.models import SiteUser
 from friends.models import Subscription
@@ -41,3 +41,5 @@ def unsubscribe(request, pk):
     Subscription.objects.get(subscriber=request.user, subscriptor_id=pk).delete()
     next_page = request.POST.get('next', '/')
     return HttpResponseRedirect(next_page)
+
+

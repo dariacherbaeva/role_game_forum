@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.views.generic import TemplateView, DetailView, UpdateView
+from django.views.generic import TemplateView, DetailView, UpdateView, ListView
 
 from forum.models import Post
 from foundation.forms import SiteRegistrationForm
@@ -64,3 +65,15 @@ class NavigationView(TemplateView):
 
 class RulesView(TemplateView):
     template_name = 'foundation/rules.html'
+
+
+class SearchResultView(ListView):
+    model = SiteUser
+    template_name = 'foundation/search_result.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = SiteUser.objects.filter(
+            Q(username__icontains=query) | Q(email__icontains=query)
+        )
+        return object_list

@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView, DetailView
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.views.generic import TemplateView, DetailView, FormView
 from rest_framework.response import Response
 
+from forum.forms import SystemPostForm
 from forum.models import Theme, Section, Post, SectionSerializer, Like
 from rest_framework.views import APIView
 
@@ -26,9 +29,22 @@ class ForumPageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ForumPageView, self).get_context_data(**kwargs)
         context['posts'] = Post.objects.filter(theme=self.object).order_by('when')
-        # context['game_form'] = GamePostForm
-        # context['system_form'] = SystemPostForm
         return context
+
+
+class SystemPostFormView(FormView):
+    form_class = SystemPostForm
+    template_name = 'forum/new_system_post.html'
+
+    def get_success_url(self):
+        return reverse_lazy(self.request.POST.get('next', 'main_page'))
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.when = timezone.now()
+        form.instance.theme = self.request.POST.get('theme')
+        form.save()
+        return super(SystemPostFormView, self).form_valid(form)
 
 
 class AllSectionView(APIView):

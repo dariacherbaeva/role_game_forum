@@ -3,9 +3,9 @@
 
 {% block content %}
     <div class="page-title" align="center">
-        <h3>Создание персонажа</h3>
+        <h3>Новый пост</h3>
     </div>
-    <form class="menu" method="post" action="{% url 'Characters:new' %}" enctype="multipart/form-data">
+    <form class="menu" method="post" action="{% url 'Forum:new_system' %}" enctype="multipart/form-data">
         <div class="form-group">
             {% csrf_token %}
             {{ form|as_bootstrap }}

@@ -103,6 +103,9 @@
                     </form>
                     <p>___________________________________________________________________</p>
                     <p><b>Лайки:</b> {{ likes|get_item:post.id }} <b>Дизлайки:</b> {{ dislikes|get_item:post.id }}</p>
+                    {% if post.author == request.user %}
+                        <a href="{% url 'Forum:delete' pk=post.id %}">Удалить пост</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -112,23 +115,15 @@
     {% elif theme.is_open == False %}
         <div class="main-page-text">Данная тема закрыта.</div>
     {% elif theme.is_game %}
-        <form class="form-control" action="{% url '' %}">
-            <div class="new-post" align="center">
-                <h5 сlass="np-title">Новый пост</h5>
-                <div class="form-group">
-                    {% csrf_token %}
-                    {{ game_form|as_bootstrap }}
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" align="center">Отправить</button>
-                </div>
-            </div>
-        </form>
-    {% elif theme.is_game == False %}
-        <form method="get" action="{% url 'Forum:new_system' %}">
+        <form method="get" action="{% url 'Forum:new_game' %}" class="main-page-text">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
-            <input type="hidden" name="theme" value="{{ theme }}"/>
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Новый пост"/>
+        </form>
+    {% elif theme.is_game == False %}
+        <form method="get" action="{% url 'Forum:new_system' %}" class="main-page-text">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
             <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Новый пост"/>
         </form>
     {% endif %}

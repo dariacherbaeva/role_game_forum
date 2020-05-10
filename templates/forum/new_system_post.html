@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="page-title" align="center">
-        <h3>Новый пост</h3>
+        <h3>Новый системный пост</h3>
     </div>
     <form class="menu" method="post" action="{% url 'Forum:new_system' %}" enctype="multipart/form-data">
         <div class="form-group">
@@ -11,6 +11,7 @@
             {{ form|as_bootstrap }}
         </div>
         <div class="form-group">
+            <input type="hidden" value="{{ request.theme_id }}" name="theme_id"/>
             <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Создать" align="center"/>
         </div>
     </form>

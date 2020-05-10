@@ -1,6 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from characters.models import Character, Subject, Faculty
 
@@ -18,14 +19,18 @@ class MyCharacterListView(ListView):
         return Character.objects.filter(player=self.request.user)
 
 
-# class PlayerToCharacterView(UpdateView):
-#   model = Character
-#  fields = ['player']
-
-
+@login_required
 def add_character(request, character_id):
     character = Character.objects.get(id=character_id)
     character.player = request.user
+    character.save()
+    return redirect('Characters:characters')
+
+
+@login_required()
+def give_up_character(request, character_id):
+    character = Character.objects.get(id=character_id)
+    character.player = None
     character.save()
     return redirect('Characters:characters')
 
@@ -40,6 +45,11 @@ class CreateCharacterView(CreateView):
         form.instance.player = self.request.user
         form.instance.is_canon = False
         return super(CreateCharacterView, self).form_valid(form)
+
+
+class CharacterDeleteView(DeleteView):
+    model = Character
+    success_url = reverse_lazy('Characters:characters')
 
 
 class SubjectsListView(ListView):

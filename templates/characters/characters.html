@@ -14,7 +14,11 @@
                         <div class="author">{{ c.name }} {{ c.last_name }}</div>
                         <p></p>
                         {% if c.player %}
-                            <div class="status">игрок: {{ c.player.username }}</div>
+                            {% if c.player != request.user %}
+                                <div class="status">игрок: {{ c.player.username }}</div>
+                            {% elif c.player == request.user %}
+                                <a href="{% url 'Characters:give_up' character_id=c.id %}">Отказаться от персонажа</a>
+                            {% endif %}
                         {% else %}
                             <div class="status"><a href="#" class="nav-link dropdown-toggle" href="#"
                                                    data-toggle="modal"
@@ -88,10 +92,10 @@
             {% endif %}
         {% endfor %}
         <p></p>
-       ㅤㅤㅤㅤㅤㅤ
+        ㅤㅤㅤㅤㅤㅤ
 
 
-       <div class="page-title" align="center">
+        <div class="page-title" align="center">
             <h3>Неканоны ролевой</h3>
         </div>
         {% for c in character_list %}
@@ -102,11 +106,15 @@
                         <div class="author">{{ c.name }} {{ c.last_name }}</div>
                         </p>
                         <p>
-                        <div class="status">игрок: {{ c.player.username }}</div>
+                            {% if c.player != request.user %}
+                                <div class="status">игрок: {{ c.player.username }}</div>
+                            {% else %}
+                                <a href="{% url 'Characters:delete' pk=c.pk %}">Удалить персонажа</a>
+                            {% endif %}
                         </p>
                         <p><img src="{{ c.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
                     </div>
-                                        <div class="posts-user">
+                    <div class="posts-user">
                         {% if c.faculty %}
                             <div class="posts-counter"><b>факультет: </b>{{ c.faculty.name }}</div>
                         {% else %}
@@ -132,7 +140,8 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="{{ c.name }}{{ c.last_name }}" tabindex="-1" role="dialog" aria-labelledby="description"
+                <div class="modal fade" id="{{ c.name }}{{ c.last_name }}" tabindex="-1" role="dialog"
+                     aria-labelledby="description"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">

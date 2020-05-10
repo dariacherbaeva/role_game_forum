@@ -3,10 +3,10 @@ from django.http import HttpResponseRedirect
 from django.template.defaultfilters import register
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import TemplateView, DetailView, FormView
+from django.views.generic import TemplateView, DetailView, FormView, DeleteView
 from rest_framework.response import Response
 
-from forum.forms import SystemPostForm
+from forum.forms import SystemPostForm, GamePostForm
 from forum.models import Theme, Section, Post, SectionSerializer, Like, Dislike
 from rest_framework.views import APIView
 
@@ -53,9 +53,32 @@ class SystemPostFormView(FormView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.when = timezone.now()
-        form.instance.theme = self.request.POST.get('theme')
         form.save()
         return super(SystemPostFormView, self).form_valid(form)
+
+
+class GamePostFormView(FormView):
+    form_class = GamePostForm
+    template_name = 'forum/new_game_post.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(GamePostFormView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_success_url(self):
+        return reverse_lazy('main_page')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.when = timezone.now()
+        form.save()
+        return super(GamePostFormView, self).form_valid(form)
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy('main_page')
 
 
 class AllSectionView(APIView):

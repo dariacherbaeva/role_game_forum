@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="main-page-text">
+            <p>Вы уверены что хотите удалить персонажа "{{ object.name }} {{ object.last_name }}"?</p>
+        </div>
+        <div class="main-page-text">
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Да">
+            <a href="{% url 'Characters:characters' %}" class="btn btn-outline-success my-2 my-sm-0">Нет</a>
+        </div>
+    </form>
+{% endblock %}

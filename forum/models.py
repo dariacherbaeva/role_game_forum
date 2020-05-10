@@ -74,4 +74,4 @@ class Dislike(models.Model):
         unique_together = (('post', 'user'),)
 
     def __str__(self):
-        return self.post.text + self.user.username
+        return self.post.text + ': ' + self.user.username

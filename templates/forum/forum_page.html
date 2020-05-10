@@ -31,10 +31,26 @@
         <div class="post-body">
             <div id="p193244-content" class="post-content">
                 {{ theme.first_post.text }}
+                <p>___________________________________________________________________</p>
                 {% if theme.first_post.picture %}
                     <img src="{{ theme.first_post.picture.url }}" class="avatar">
+                    <p>___________________________________________________________________</p>
                 {% endif %}
-                <p><a href="#" class="reply-a">Ответить</a></p>
+                <form method="post"
+                      action="{% url 'Forum:like' pk=theme.first_post.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Мне нравится"/>
+                </form>
+                <p></p>
+                <form method="post"
+                      action="{% url 'Forum:dislike' pk=theme.first_post.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Мне не нравится"/>
+                </form>
+                <p>___________________________________________________________________</p>
+                <p><b>Лайки:</b> {{ first_likes }} <b>Дизлайки:</b> {{ first_dislikes }}</p>
             </div>
         </div>
     </div>
@@ -69,8 +85,24 @@
                         <div>
                             <img src="{{ post.picture.url }}" class="avatar">
                         </div>
+                        <p>___________________________________________________________________</p>
                     {% endif %}
-                    <p><a href="#" class="reply-a">Ответить</a></p>
+
+                    <form method="post"
+                          action="{% url 'Forum:like' pk=post.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Мне нравится"/>
+                    </form>
+                    <p></p>
+                    <form method="post"
+                          action="{% url 'Forum:dislike' pk=post.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Мне не нравится"/>
+                    </form>
+                    <p>___________________________________________________________________</p>
+                    <p><b>Лайки:</b> {{ likes|get_item:post.id }} <b>Дизлайки:</b> {{ dislikes|get_item:post.id }}</p>
                 </div>
             </div>
         </div>

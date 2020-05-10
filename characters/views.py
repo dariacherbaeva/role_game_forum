@@ -14,6 +14,9 @@ class MyCharacterListView(ListView):
     model = Character
     template_name = 'characters/my_characters.html'
 
+    def get_queryset(self):
+        return Character.objects.filter(player=self.request.user)
+
 
 # class PlayerToCharacterView(UpdateView):
 #   model = Character

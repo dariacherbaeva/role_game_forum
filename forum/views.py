@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.template.defaultfilters import register
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import TemplateView, DetailView, FormView
 from rest_framework.response import Response
 
 from forum.forms import SystemPostForm
-from forum.models import Theme, Section, Post, SectionSerializer, Like
+from forum.models import Theme, Section, Post, SectionSerializer, Like, Dislike
 from rest_framework.views import APIView
 
 
@@ -28,7 +29,17 @@ class ForumPageView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ForumPageView, self).get_context_data(**kwargs)
-        context['posts'] = Post.objects.filter(theme=self.object).order_by('when')
+        posts = Post.objects.filter(theme=self.object).order_by('when')
+        context['posts'] = posts
+        context['first_likes'] = Like.objects.filter(post=self.object.first_post).count()
+        context['first_dislikes'] = Dislike.objects.filter(post=self.object.first_post).count()
+        likes = {}
+        dislikes = {}
+        for p in posts:
+            likes[p.pk] = Like.objects.filter(post=p).count()
+            dislikes[p.pk] = Dislike.objects.filter(post=p).count()
+        context['likes'] = likes
+        context['dislikes'] = dislikes
         return context
 
 
@@ -56,8 +67,27 @@ class AllSectionView(APIView):
 @login_required
 def like(request, pk):
     if Like.objects.filter(post_id=pk, user=request.user).exists():
-        Like.objects.delete(post_id=pk, user=request.user)
+        Like.objects.get(post_id=pk, user=request.user).delete()
     else:
+        if Dislike.objects.filter(post_id=pk, user=request.user).exists():
+            Dislike.objects.get(post_id=pk, user=request.user).delete()
         Like.objects.create(post_id=pk, user=request.user)
     next_page = request.POST.get('next', '/')
     return HttpResponseRedirect(next_page)
+
+
+@login_required()
+def dislike(request, pk):
+    if Dislike.objects.filter(post_id=pk, user=request.user).exists():
+        Dislike.objects.get(post_id=pk, user=request.user).delete()
+    else:
+        if Like.objects.filter(post_id=pk, user=request.user).exists():
+            Like.objects.get(post_id=pk, user=request.user).delete()
+        Dislike.objects.create(post_id=pk, user=request.user)
+    next_page = request.POST.get('next', '/')
+    return HttpResponseRedirect(next_page)
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

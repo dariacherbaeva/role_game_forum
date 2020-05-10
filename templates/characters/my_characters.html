@@ -7,7 +7,6 @@
     </div>
     {% if character_list %}
         {% for c in character_list %}
-            {% if c.player.id == request.user.id %}
                 <div class="profile">
                     <div class="about-user" align="center">
                         <div class="author">{{ c.name }} {{ c.last_name }}</div>
@@ -58,7 +57,6 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
         {% endfor %}
     {% else %}
         Персонажей пока нет.

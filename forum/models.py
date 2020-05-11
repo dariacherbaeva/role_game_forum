@@ -8,7 +8,7 @@ from characters.models import Character
 from foundation.models import SiteUser
 
 
-# только для игровых тем
+# for game themes only
 class Section(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
@@ -20,7 +20,7 @@ class Section(models.Model):
 class SectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Section
-        fields = ['name', 'description']
+        fields = ['id', 'name', 'description']
 
     def create(self, validated_data):
         return Section.objects.create(**validated_data)
@@ -63,7 +63,7 @@ class Like(models.Model):
         unique_together = (('post', 'user'),)
 
     def __str__(self):
-        return self.post.text + self.user.username
+        return self.post.text + ': ' + self.user.username
 
 
 class Dislike(models.Model):

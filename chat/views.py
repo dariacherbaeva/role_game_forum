@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, ListView
 
@@ -8,7 +9,7 @@ class NewMessageView(CreateView):
     model = Message
     fields = ['text', 'to_who']
     template_name = 'chat/new_message.html'
-    success_url = '/'
+    success_url = reverse_lazy('main_page')
 
     def form_valid(self, form):
         form.instance.from_who = self.request.user

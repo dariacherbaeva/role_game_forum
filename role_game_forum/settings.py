@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'friends',
     'django_forms_bootstrap',
     'rest_framework',
+    'django_celery_beat',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,13 @@ AUTH_USER_MODEL = 'foundation.SiteUser'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 MEDIA_URL = '/media/'
+CELERY_BROKER_URL = "amqp://celeryuser:celerypassword@localhost:5672/celeryhost"
+
+# for security reasons, mention the list of accepted content-types (in this case json)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_TIMEZONE = 'UTC'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, UpdateView, ListView
 
 from forum.models import Post
@@ -52,7 +53,7 @@ class ProfileEditView(UpdateView):
     template_name = 'foundation/profile_edit.html'
     model = SiteUser
     fields = ('email', 'username', 'status', 'photo')
-    success_url = 'profile'
+    success_url = reverse_lazy('main_page')
 
 
 class PlotView(TemplateView):

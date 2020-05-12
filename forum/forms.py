@@ -12,7 +12,7 @@ class GamePostForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(GamePostForm, self).__init__(*args, **kwargs)
         self.fields['character'].queryset = Character.objects.filter(player=user)
-        self.fields['theme'].queryset = Theme.objects.filter(is_game=True)
+        self.fields['theme'].queryset = Theme.objects.filter(is_game=True, is_open=True)
 
 
 class SystemPostForm(ModelForm):
@@ -22,4 +22,4 @@ class SystemPostForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SystemPostForm, self).__init__(*args, **kwargs)
-        self.fields['theme'].queryset = Theme.objects.filter(is_game=False)
+        self.fields['theme'].queryset = Theme.objects.filter(is_game=False, is_open=True)

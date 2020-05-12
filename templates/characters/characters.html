@@ -31,7 +31,11 @@
                         <p><img src="{{ c.photo.url }}" width="180" height="180" class="avatar" align="center"></p>
                     </div>
                     <div class="posts-user">
-                        <div class="posts-counter"><b>факультет: </b>{{ c.faculty.name }}</div>
+                        {% if c.faculty %}
+                            <div class="posts-counter"><b>факультет: </b>{{ c.faculty.name }}</div>
+                        {% else %}
+                            <div class="posts-counter"><b>преподаватель</b></div>
+                        {% endif %}
                         {% if c.blood_status == 'p' %}
                             <div class="posts-counter"><b>статус крови:</b> чистокровный(ая)</div>
                         {% elif c.blood_status == 'h' %}
@@ -40,7 +44,9 @@
                             <div class="posts-counter"><b>статус крови:</b> магглорождённый(ая)</div>
                         {% endif %}
                         <div class="posts-counter"><b>возраст:</b> {{ c.age }}</div>
-                        <div class="posts-counter"><b>курс:</b> {{ c.year }}</div>
+                        {% if c.year != 0 %}
+                            <div class="posts-counter"><b>курс:</b> {{ c.year }}</div>
+                        {% endif %}
                         <p></p>
                         <div class="posts-counter"><b> <a href="#" data-toggle="modal"
                                                           data-target="#{{ c.name }}{{ c.last_name }}"

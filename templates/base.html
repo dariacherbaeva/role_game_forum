@@ -116,8 +116,8 @@
                 <div class="dropdown-menu" id="myDropdown2">
                     <a class="dropdown-item" href="{% url 'Characters:characters' %}">Список персонажей</a>
                     {% if user.is_authenticated %}
-                    <a class="dropdown-item" href="{% url 'Characters:new' %}">Создание персонажа</a>
-                    <a class="dropdown-item" href="{% url 'Characters:my_characters' %}">Мои персонажи</a>
+                        <a class="dropdown-item" href="{% url 'Characters:new' %}">Создание персонажа</a>
+                        <a class="dropdown-item" href="{% url 'Characters:my_characters' %}">Мои персонажи</a>
                     {% endif %}
                 </div>
             </li>
@@ -128,14 +128,21 @@
                     <a class="dropdown-item" href="{% url 'plot' %}">Сюжет</a>
                     <a class="dropdown-item" href="{% url 'navigation' %}">Навигация</a>
                     <a class="dropdown-item" href="{% url 'Characters:school' %}">О школе</a>
-                    <a class="dropdown-item" href="{% url 'rules'%}">Правила</a>
+                    <a class="dropdown-item" href="{% url 'rules' %}">Правила</a>
                     <a class="dropdown-item" href="{% url 'Forum:list' %}">Обсуждения</a>
+                    {% if user.is_authenticated %}
+                        {% if user.is_admin %}
+                            <a class="dropdown-item" href="{% url 'Forum:api_sections' %}">API раздел</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{% url 'Forum:doc' %}">Документация API</a>
+                    {% endif %}
                 </div>
             </li>
             <li>
                 <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'search' %}">
                     {% csrf_token %}
-                    <input class="form-control mr-sm-2" type="search" placeholder="Поиск пользователей" aria-label="Search"
+                    <input class="form-control mr-sm-2" type="search" placeholder="Поиск пользователей"
+                           aria-label="Search"
                            id="search" name="q">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
                 </form>

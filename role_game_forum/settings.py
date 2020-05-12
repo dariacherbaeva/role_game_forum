@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-
+from celery.schedules import crontab
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_celery_beat',
     'rest_framework_swagger',
+    'djcelery_email'
 ]
 
 MIDDLEWARE = [
@@ -129,7 +130,8 @@ AUTH_USER_MODEL = 'foundation.SiteUser'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 MEDIA_URL = '/media/'
-CELERY_BROKER_URL = "amqp://celeryuser:celerypassword@localhost:5672/celeryhost"
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'}
 
 # for security reasons, mention the list of accepted content-types (in this case json)
 CELERY_ACCEPT_CONTENT = ['json']
@@ -139,3 +141,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BEAT_SCHEDULE = {
+    'send-message-every-morning': {
+        'task': 'message',
+        'schedule': crontab(minute='30', hour='12'),
+    }
+}
+
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'infa805@gmail.com'
+EMAIL_HOST_PASSWORD = 'Qwerty007'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Ролевая Игра "Школа волшебства Уагаду" <noreply@example.com>'

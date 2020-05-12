@@ -32,7 +32,7 @@ class Character(models.Model):
     photo = models.ImageField(upload_to='photos')
 
     def __str__(self):
-        return self.name
+        return self.name + self.last_name
 
 
 class Subject(models.Model):

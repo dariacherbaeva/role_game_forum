@@ -50,7 +50,7 @@ class SystemPostFormView(FormView):
     template_name = 'forum/new_system_post.html'
 
     def get_success_url(self):
-        return reverse_lazy(self.request.POST.get('next', 'main_page'))
+        return reverse_lazy(self.request.POST.get('next', 'Forum:list'))
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -69,7 +69,7 @@ class GamePostFormView(FormView):
         return kwargs
 
     def get_success_url(self):
-        return reverse_lazy('main_page')
+        return reverse_lazy('Forum:list')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -80,7 +80,7 @@ class GamePostFormView(FormView):
 
 class PostDeleteView(DeleteView):
     model = Post
-    success_url = reverse_lazy('main_page')
+    success_url = reverse_lazy('Forum:list')
 
 
 @login_required

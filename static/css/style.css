@@ -121,6 +121,8 @@ a:hover {
     margin-left: 10pt;
     margin-right: 18pt;
     border: 2px outset rgb(29, 26, 26);
+    max-height: 500px;
+    max-width: 600px;
 }
 
 .author {

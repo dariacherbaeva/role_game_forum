@@ -10,4 +10,4 @@ class Message(models.Model):
     when = models.DateTimeField()
 
     def __str__(self):
-        return 'from: ' + self.from_who.username + ' to: ' + self.to_who.username  + ' ' + self.text
+        return 'from: ' + self.from_who.username + ' to: ' + self.to_who.username + ' ' + self.text

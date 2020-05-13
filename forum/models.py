@@ -52,7 +52,7 @@ class Post(models.Model):
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='theme', blank=True, null=True)
 
     def __str__(self):
-        return self.text
+        return self.author.username + '^' + self.text
 
 
 class Like(models.Model):

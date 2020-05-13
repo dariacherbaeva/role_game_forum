@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
@@ -17,8 +18,8 @@ def registration_view(request):
         form = SiteRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            email = form.cleaned_data.get('email')
-            raw_password = form.cleaned_data.get('password1')
+            # email = form.cleaned_data.get('email')
+            # raw_password = form.cleaned_data.get('password1')
             # account = authenticate(email=email, password=raw_password)
             # login(request, account)
             return redirect('login')
@@ -49,7 +50,7 @@ class ProfileView(DetailView):
         return context
 
 
-class ProfileEditView(UpdateView):
+class ProfileEditView(LoginRequiredMixin, UpdateView):
     template_name = 'foundation/profile_edit.html'
     model = SiteUser
     fields = ('email', 'username', 'status', 'photo')

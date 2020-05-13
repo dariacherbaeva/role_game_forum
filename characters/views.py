@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from characters.models import Character, Subject, Faculty
@@ -11,7 +13,7 @@ class CharacterListView(ListView):
     template_name = 'characters/characters.html'
 
 
-class MyCharacterListView(ListView):
+class MyCharacterListView(LoginRequiredMixin, ListView):
     model = Character
     template_name = 'characters/my_characters.html'
 
@@ -35,7 +37,7 @@ def give_up_character(request, character_id):
     return redirect('Characters:characters')
 
 
-class CreateCharacterView(CreateView):
+class CreateCharacterView(LoginRequiredMixin, CreateView):
     model = Character
     template_name = 'characters/new_character.html'
     fields = ['name', 'last_name', 'age', 'blood_status', 'description', 'faculty', 'year', 'photo']
@@ -47,7 +49,7 @@ class CreateCharacterView(CreateView):
         return super(CreateCharacterView, self).form_valid(form)
 
 
-class CharacterDeleteView(DeleteView):
+class CharacterDeleteView(LoginRequiredMixin, DeleteView):
     model = Character
     success_url = reverse_lazy('Characters:characters')
 

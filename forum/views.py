@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import register
@@ -45,7 +46,7 @@ class ForumPageView(DetailView):
         return context
 
 
-class SystemPostFormView(FormView):
+class SystemPostFormView(LoginRequiredMixin, FormView):
     form_class = SystemPostForm
     template_name = 'forum/new_system_post.html'
 
@@ -59,7 +60,7 @@ class SystemPostFormView(FormView):
         return super(SystemPostFormView, self).form_valid(form)
 
 
-class GamePostFormView(FormView):
+class GamePostFormView(LoginRequiredMixin, FormView):
     form_class = GamePostForm
     template_name = 'forum/new_game_post.html'
 
@@ -78,7 +79,7 @@ class GamePostFormView(FormView):
         return super(GamePostFormView, self).form_valid(form)
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('Forum:list')
 

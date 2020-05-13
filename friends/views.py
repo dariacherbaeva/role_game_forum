@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, ListView
 
@@ -6,7 +7,7 @@ from foundation.models import SiteUser
 from friends.models import Subscription
 
 
-class FriendsListView(TemplateView):
+class FriendsListView(LoginRequiredMixin, TemplateView):
     template_name = 'friends/friends_list.html'
 
     def get_context_data(self, **kwargs):

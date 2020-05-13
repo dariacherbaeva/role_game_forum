@@ -79,6 +79,9 @@
             </div>
             <div class="post-body">
                 <div id="p193244-content" class="post-content">
+                    {% if post.character %}
+                        <p>персонаж: {{ post.character.name }} {{ post.character.last_name }}</p>
+                    {% endif %}
                     {{ post.text }}
                     <p>___________________________________________________________________</p>
                     {% if post.picture %}

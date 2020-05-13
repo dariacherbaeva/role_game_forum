@@ -83,6 +83,9 @@
                         <p><b>персонаж:</b> <i>{{ post.character.name }} {{ post.character.last_name }}</i></p>
                     {% endif %}
                     {{ post.text }}
+                    {% if post.url %}
+                        <p><b>ссылка:</b> <i>{{ post.url }}</i></p>
+                    {% endif %}
                     <p>___________________________________________________________________</p>
                     {% if post.picture %}
                         <div>

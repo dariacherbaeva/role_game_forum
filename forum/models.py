@@ -50,6 +50,7 @@ class Post(models.Model):
     picture = models.ImageField(upload_to='photos', blank=True, null=True)
     when = models.DateTimeField()
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='theme', blank=True, null=True)
+    url = models.URLField(blank=True, null=True, default=None)
 
     def __str__(self):
         return self.author.username + '^' + self.text

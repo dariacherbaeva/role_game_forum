@@ -4,6 +4,7 @@ from friends.models import Subscription
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('subscriptor', 'subscriber',)
     list_filter = ('subscriptor', 'subscriber',)
 
 

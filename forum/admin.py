@@ -10,20 +10,25 @@ class SectionAdmin(admin.ModelAdmin):
 
 
 class ThemeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
     search_fields = ('name',)
     list_filter = ('section',)
 
 
 class PostAdmin(admin.ModelAdmin):
+    list_display = ('text',)
     search_fields = ('text',)
     list_filter = ('theme', 'author',)
+    sortable_by = ('text',)
 
 
 class LikeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'post',)
     list_filter = ('user', 'post',)
 
 
 class DislikeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'post',)
     list_filter = ('user', 'post',)
 
 

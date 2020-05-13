@@ -38,7 +38,7 @@
             {% for s in subjects %}
                 <div class="main-page-text">Название: {{ s.name }}</div>
                 {% if s.teacher %}
-                    <div class="main-page-text">Учитель: {{ s.teacher.name }}</div>
+                    <div class="main-page-text">Учитель: {{ s.teacher.name }} {{ s.teacher.last_name }}</div>
                 {% else %}
                     <div class="main-page-text">Учитель: нет.</div>
                 {% endif %}

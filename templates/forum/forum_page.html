@@ -84,7 +84,7 @@
                     {% endif %}
                     {{ post.text }}
                     {% if post.url %}
-                        <p><b>ссылка:</b> <i>{{ post.url }}</i></p>
+                        <p><b>ссылка:</b> <i><a href="{{ post.url }}">{{ post.url }}</a> </i></p>
                     {% endif %}
                     <p>___________________________________________________________________</p>
                     {% if post.picture %}

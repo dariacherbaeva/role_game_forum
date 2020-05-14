@@ -5,7 +5,7 @@ from foundation.views import MainPageView as Main, registration_view as registra
 urlpatterns = [
     path('register/', registration, name='registration'),
     path('', Main.as_view(), name='main_page'),
-    re_path('profile/(?P<pk>[0-9])/', ProfileView.as_view(), name='profile'),
+    re_path('profile/(?P<pk>[0-9])+/', ProfileView.as_view(), name='profile'),
     path('profile/<int:pk>/edit', ProfileEditView.as_view(), name='profile_edit'),
     path('plot/', PlotView.as_view(), name='plot'),
     path('navigation/', NavigationView.as_view(), name='navigation'),

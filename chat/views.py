@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import F
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, ListView
@@ -22,13 +21,3 @@ class NewMessageView(LoginRequiredMixin, CreateView):
 class MyMessagesListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = 'chat/messages.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(MyMessagesListView, self).get_context_data(**kwargs)
-        received = Message.objects.filter(to_who=self.request.user)
-        my = Message.objects.filter(to_who_id=F('id'))
-        context['my_messages'] = my
-        context['sent'] = received | my
-        return context
-
-

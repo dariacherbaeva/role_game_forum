@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 
 from foundation.models import SiteUser
 
@@ -11,3 +12,6 @@ class Message(models.Model):
 
     def __str__(self):
         return 'from: ' + self.from_who.username + ' to: ' + self.to_who.username + ' ' + self.text
+
+    class Meta:
+        ordering = [F('when')]

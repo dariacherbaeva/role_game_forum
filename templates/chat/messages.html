@@ -42,19 +42,6 @@
             {% endif %}
         {% endfor %}
 
-        <div class="page-title" align="center">
-            <h3>Сообщения самому себе</h3>
-        </div>
-
-        {% for m in my_messages %}
-            <div class="location-list">
-                <div class="location-link">
-                    <p>Кому: {{ m.to_who }}</p>
-                    <p>Текст: {{ m.text }}</p>
-                </div>
-            </div>
-        {% endfor %}
-
     </div>
 
 

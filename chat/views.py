@@ -26,7 +26,7 @@ class MyMessagesListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(MyMessagesListView, self).get_context_data(**kwargs)
         received = Message.objects.filter(to_who=self.request.user)
-        my = Message.objects.filter(from_who_id=F('id'))
+        my = Message.objects.filter(to_who_id=F('id'))
         context['my_messages'] = my
         context['sent'] = received | my
         return context

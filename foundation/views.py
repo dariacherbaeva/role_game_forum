@@ -47,6 +47,7 @@ class ProfileView(DetailView):
                 context['is_sub'] = True
             else:
                 context['is_sub'] = False
+
         return context
 
 

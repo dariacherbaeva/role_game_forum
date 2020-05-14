@@ -60,6 +60,8 @@
             {% endif %}
             {% if siteuser.id == request.user.id %}
                 <p><a href="{% url 'profile_edit' pk=siteuser.id %}">Редактировать профиль</a></p>
+            {% else %}
+                <p>___________________________________________________________</p>
             {% endif %}
 
         </div>
